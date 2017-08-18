@@ -52,7 +52,7 @@ function Ping(param){
         }else{
           img = 'excellent'
         }
-        output = '<img src="img/'+img+'.png" title="'+time+' ms">'
+        output = '<img src="img/'+img+'.png" title="'+time+' ms" style="height:64px">'
       }
       _this.node.innerHTML = output;
     }
