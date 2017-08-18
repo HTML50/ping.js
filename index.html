@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>ping.js</title>
+<style>
+*{margin:0;padding:0}
+html,body{height:100%;}
+input,select,body,textarea{font-size:20px;margin: 3px;}
+#container{border:1px solid #ccc;border-radius:5px;width:50%;padding:10px;margin:10% auto;}
+#content{width:60%;margin:0 auto}
+#frequency {width:100px;}
+#node {width:300px;}
+#tryBtn{display:block;padding:5px 15px;margin:0 auto;}
+#result{width: 365px;height: 136px;}
+#ping{width:100px; margin:0 auto;border:1px solid #ccc;}
+</style>
+</head>
+<body>
+<div id="container">
+<div id="content">
+
+
+<div>
+<label for="http">URL:</label>
+<input type="text" id="http" value="http://"/>
+</div>
+
+<div>
+<label for="mode">Mode:</label>
+<select id="mode">
+<option value="text">text</option>
+<option value="graph">graph</option>
+</select>
+</div>
+
+<div>
+<label for="frequencyTime">frequency(ms):</label>
+<input type="number" id="frequencyTime" value="5000"/>
+</div>
+
+<div>
+<label for="node">DOM:</label>
+<input type="text" id="node" value="document.getElementById('ping')" disabled />
+</div>
+
+<div>
+<input type="button" id="tryBtn" value="try" />
+</div>
+
+
+a div which id='ping' below
+<div id='ping'></div>
+
+
+//code here
+<div>
+<textarea id='result'></textarea>
+</div>
+
+
+
+</div>
+</div>
+
+
+
+<script src="ping.js"></script>
+<script>
+'use stric'
+var pingJs = new Ping({
+//url:'http://www.baidu.com',
+frequency:1000,
+mode:'text',
+node:ping //necessary
+});
+
+
+tryBtn.addEventListener('click',function(){
+  
+if(http.value==='http://' || frequencyTime.valueAsNumber > 20000 || frequencyTime.valueAsNumber < 100){
+ alert('url is empty or frequency is not proper');
+ return false;
+}
+  
+  let url = http.value,
+      mode = document.getElementById('mode').value,
+      frequency = frequencyTime.valueAsNumber,
+      node = document.getElementById('node').value,
+      text = 'var pingJs = new Ping({\n\
+      url:\''+url+'',\n\
+      frequency:1000,\n\
+      mode:\'text\',\n\
+      node:ping\n\
+      });';
+        
+
+  pingJs.stop();
+
+  pingJs.url = url;
+  pingJs.mode = mode;
+  pingJs.frequency = frequency;
+
+  pingJs.start()
+  
+  result.value = text;
+})
+
+
+
+
+</script>
+</body>
+</html>
