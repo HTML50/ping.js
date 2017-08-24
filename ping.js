@@ -68,8 +68,7 @@ function Ping(param) {
             output = '<img src="img/' + img + '.png" title="' + time + ' ms" style="height:'+_this.height+'px">'
         } else{
             var ele = document.getElementById('pingGraphDIV'),
-                speed = getSpeedStatus(time);;
-                console.log(speed)
+                speed = getSpeedStatus(time);
             if (!ele) {
                 _this.node.innerHTML = '<graph id="pingGraphDIV">\
             <graph class="ping-triangle">\
@@ -90,7 +89,7 @@ function Ping(param) {
                 setGraph(300, 'red');
             } else if (speed === 'bad') {
                 setGraph(250, 'red');
-            } else if (img === 'slow') {
+            } else if (speed === 'slow') {
                 setGraph(200, '#ffd56c');
             } else if (speed === 'fine') {
                 setGraph(180, 'yellow');
