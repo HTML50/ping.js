@@ -5,15 +5,45 @@
     <meta charset="utf-8" />
     <title>ping.js</title>
     <style>
+    @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+
+
+    .block{
+        position: fixed;
+        right: 0;top: 0;
+    }
+    .star-me{
+    border-bottom: 3px #d7d7d7 solid;
+    border-top: 3px #d7d7d7 solid;
+    width: 410px;
+    height: 83px;
+    background: #efefef;
+    font-family: 'Ubuntu',sans-serif; 
+    font-size: 2.2rem;
+    text-shadow: #868686 1px 1px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(45deg) translate(110px,-20px);
+    }
+    .star-me a{
+        color:#3f3f3f;
+        text-decoration: none;
+    }
+    .star-me a:hover{
+        text-decoration: underline;
+    }
+
+
     * {
         margin: 0;
-        padding: 0
+        padding: 0;
     }
 
     html,
     body {
         height: 100%;
-        overflow: hidden;
     }
 
     input,
@@ -25,20 +55,39 @@
     }
 
     #container {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 708px;
-        padding: 10px;
+width: 708px;
+    padding: 10px;
+    margin: 20px auto;
+    box-shadow: #afafaf 1px 1px 28px 1px;
+    }
+
+    #container div {
         margin: 1% auto;
     }
 
     #content {
         width: 60%;
-        margin: 0 auto
+        margin: 0 auto;
     }
 
+    #content>div:first-child {
+        width: 380px;
+    }
+    #height{
+    	    width: 293px;
+    }
     #frequency {
         width: 100px;
+    }
+    #heightDIV{
+    	display: none;
+    }
+    #http {
+        width: 308px;
+    }
+
+    #frequencyTime {
+        width: 226px;
     }
 
     #node {
@@ -55,15 +104,21 @@
         width: 700px;
         height: 300px;
         color: #8d8d8d;
-     		line-height: 1.5;
+        line-height: 1.5;
     }
 
     #ping {
-		    text-align: center;
-		    margin: 30px auto;
-		    background: #eee;
-		    padding: 10px;
+        text-align: center;
+        margin: 30px auto;
+        background: #eee;
+        padding: 10px;
     }
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background-color:#c4c4c4}
+::-webkit-scrollbar-thumb{background-color:#656565}
+::-webkit-scrollbar-thumb:hover{background-color:#ccc}
+::-webkit-scrollbar-thumb:active{background-color:#656565}
 
     </style>
 </head>
@@ -72,79 +127,102 @@
     <div id="container">
         <div id="content">
             <div>
-                <label for="http">URL:</label>
-                <input type="text" id="http" value="http://www.baidu.com" />
+                <div>
+                    <label for="http">URL:</label>
+                    <input type="url" id="http" value="http://www.baidu.com" />
+                </div>
+                <div>
+                    <label for="style">Style:</label>
+                    <select id="style">
+                        <option value="text">text</option>
+                        <option value="image">image</option>
+                        <option value="graph">graph</option>
+                    </select>
+                </div>
+                  <div id='heightDIV'>
+                    <label for="height">Height:</label>
+ 										<input type="number" id="height" value="64" />
+                </div>
+                <div>
+                    <label for="frequencyTime">Frequency(ms):</label>
+                    <input type="number" id="frequencyTime" value="5000" />
+                </div>
+                <div>
+                    <label for="node">DOM:</label>
+                    <input type="text" id="node" value="document.getElementById('ping')" disabled />
+                </div>
+                <div>
+                    <input type="button" id="tryBtn" value="try" />
+                </div>
             </div>
-            <div>
-                <label for="mode">Mode:</label>
-                <select id="mode">
-                    <option value="text">text</option>
-                    <option value="graph">graph</option>
-                </select>
-            </div>
-            <div>
-                <label for="frequencyTime">frequency(ms):</label>
-                <input type="number" id="frequencyTime" value="5000" />
-            </div>
-            <div>
-                <label for="node">DOM:</label>
-                <input type="text" id="node" value="document.getElementById('ping')" disabled />
-            </div>
-            <div>
-                <input type="button" id="tryBtn" value="try" />
-            </div>
-            
             <div id='ping'></div>
         </div>
-
-             <div>
-                <textarea id='result'>code will be generated here:</textarea>
-            </div>
-
+        <div id="animation"></div>
+        <div>
+            <textarea id='result'>code will be generated here:</textarea>
+        </div>
     </div>
-    <a href="https://github.com/HTML50/ping.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="//html50.github.io/hover.js/fork.png"></a>
-
+    
+<div class="block">
+    <div class="star-me">
+    <a href="//github.com/html50/ping.js">star me on github</a>
+    </div>
+    </div>
 
 
     <script src="ping.js"></script>
     <script>
     'use stric'
     var pingJs = new Ping({
-        //url:'http://www.baidu.com',
+        url: 'http://www.baidu.com',
         frequency: 1000,
-        mode: 'text',
+        style: 'text',
+        timeout: 5000,
         node: ping //necessary
     });
 
 
+    style.addEventListener('change',function(){
+    	if(this.value !== 'text'){
+    			heightDIV.style.display = 'block';
+    	}else{
+    		heightDIV.style.display = 'none';
+    	}
+    })
+
     tryBtn.addEventListener('click', function() {
 
-        if (http.value === 'http://' || frequencyTime.valueAsNumber > 20000 || frequencyTime.valueAsNumber < 100 || isNaN(frequencyTime.valueAsNumber)) {
+        if (http.value.indexOf('http://') === -1 || frequencyTime.valueAsNumber > 20000 || frequencyTime.valueAsNumber < 100 || isNaN(frequencyTime.valueAsNumber)) {
             alert('url is empty or frequency is not proper');
             return false;
         }
 
-        let url = http.value,
-            mode = document.getElementById('mode').value,
+        var url = http.value,
+            style = document.getElementById('style').value,
             frequency = frequencyTime.valueAsNumber,
             node = document.getElementById('node').value,
+            height= document.getElementById('height').value;
             text = '<scirpt src="//html50.github.io/ping.js/ping.js"></scirpt>\n\
-            <scirpt>\n\
-	var pingJs = new Ping({\n\
+<scirpt>\n\
+  var pingJs = new Ping({\n\
   url:\'' + url + '\',\n\
   frequency:' + frequency + ',\n\
-  mode:\'' + mode + '\',\n\
-  node:ping  //change this\n\
+  style:\'' + style + '\',\n',
+  text1='  node:document.getElementById(\'ping\')  //change this\n\
   });\n\
-  </scirpt>\
-  ';
+</scirpt>';
 
+if(style.value!=='text'){
+	text += '  height:\''+height+'\',\n'
+}
+text+=text1;
 
         pingJs.stop();
 
         pingJs.url = url;
-        pingJs.mode = mode;
+        pingJs.style = style;
         pingJs.frequency = frequency;
+        pingJs.height = height;
 
         pingJs.start()
 
